@@ -3,14 +3,15 @@ import { Link } from "react-router-dom";
 import withStyles from "@material-ui/core/styles/withStyles";
 import PropTypes from "prop-types";
 import AppIcon from "../images/icon.jpg";
-import axios from "axios";
-
-// MUI Stuff
+//MUI Stuff
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import CircularProgress from "@material-ui/core/CircularProgress";
+//redux
+import { connect } from "react-redux";
+import { loginUser } from "../redux/actions/UserAction";
 
 const styles = theme => ({
   ...theme.spreadThis
@@ -20,9 +21,16 @@ class Login extends Component {
   state = {
     email: "",
     password: "",
-    loading: false,
-    errors: {}
+    errors: ""
   };
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.UI.errors) {
+      this.setState({
+        errors: nextProps.UI.errors
+      });
+    }
+  }
 
   handleChange = event => {
     this.setState({
@@ -32,33 +40,21 @@ class Login extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    this.setState({
-      loading: true
-    });
+
     const userData = {
       email: this.state.email,
       password: this.state.password
     };
-    axios
-      .post("/login", userData)
-      .then(res => {
-        localStorage.setItem("FBIdToken", `Bearer ${res.data.token}`);
-        this.setState({
-          loading: false
-        });
-        this.props.history.push("/");
-      })
-      .catch(err => {
-        this.setState({
-          loading: false,
-          errors: err.response.data
-        });
-      });
+
+    this.props.loginUser(userData, this.props.history);
   };
 
   render() {
-    const { classes } = this.props;
-    const { errors, loading } = this.state;
+    const {
+      classes,
+      UI: { loading }
+    } = this.props;
+    const { errors } = this.state;
     return (
       <Grid container className={classes.form}>
         <Grid item sm />
@@ -122,7 +118,24 @@ class Login extends Component {
 }
 
 Login.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  loginUser: PropTypes.func.isRequired,
+  user: PropTypes.object.isRequired,
+  UI: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(Login);
+const mapStateToProps = state => {
+  return {
+    user: state.user,
+    UI: state.UI
+  };
+};
+
+const mapDispatchToProps = {
+  loginUser
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(styles)(Login));
