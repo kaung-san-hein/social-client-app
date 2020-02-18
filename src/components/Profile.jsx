@@ -6,7 +6,7 @@ import dayjs from "dayjs";
 
 // redux
 import { connect } from "react-redux";
-import { uploadImage } from "../redux/actions/UserAction";
+import { logoutUser, uploadImage } from "../redux/actions/UserAction";
 
 // MUI stuff
 import Button from "@material-ui/core/Button";
@@ -20,6 +20,8 @@ import LocationOn from "@material-ui/icons/LocationOn";
 import LinkIcon from "@material-ui/icons/Link";
 import CalendarToday from "@material-ui/icons/CalendarToday";
 import EditIcon from "@material-ui/icons/Edit";
+import KeyboardReturn from "@material-ui/icons/KeyboardReturn";
+import EditDetail from "./EditDetail";
 
 const styles = theme => ({
   paper: {
@@ -76,10 +78,16 @@ class Profile extends Component {
     formData.append("image", image, image.name);
     this.props.uploadImage(formData);
   };
+
   handleEditPicture = () => {
     const fileInput = document.getElementById("imageInput");
     fileInput.click();
   };
+
+  handleLogout = () => {
+    this.props.logoutUser();
+  };
+
   render() {
     const {
       classes,
@@ -145,6 +153,12 @@ class Profile extends Component {
               <CalendarToday color="primary" />{" "}
               <span>Joined {dayjs(createdAt).format("MMM YYYY")}</span>
             </div>
+            <Tooltip title="Logout" placement="top">
+              <IconButton onClick={this.handleLogout}>
+                <KeyboardReturn color="primary" />
+              </IconButton>
+            </Tooltip>
+            <EditDetail />
           </div>
         </Paper>
       ) : (
@@ -183,7 +197,8 @@ class Profile extends Component {
 Profile.propTypes = {
   user: PropTypes.object.isRequired,
   classes: PropTypes.object.isRequired,
-  uploadImage: PropTypes.func.isRequired
+  uploadImage: PropTypes.func.isRequired,
+  logoutUser: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => {
@@ -193,7 +208,8 @@ const mapStateToProps = state => {
 };
 
 const mapStateToDispatch = {
-  uploadImage
+  uploadImage,
+  logoutUser
 };
 
 export default connect(
