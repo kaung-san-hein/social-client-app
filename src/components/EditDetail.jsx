@@ -18,6 +18,7 @@ import Tooltip from "@material-ui/core/Tooltip";
 
 // MUI icon
 import EditIcon from "@material-ui/icons/Edit";
+import MyButton from "../util/MyButton";
 
 const styles = theme => ({
   ...theme.spreadThis,
@@ -80,11 +81,13 @@ class EditDetail extends Component {
     const { classes } = this.props;
     return (
       <React.Fragment>
-        <Tooltip title="Edit details" placement="top">
-          <IconButton onClick={this.handleOpen} className={classes.button}>
-            <EditIcon color="primary" />
-          </IconButton>
-        </Tooltip>
+        <MyButton
+          tip="Edit details"
+          onClick={this.handleOpen}
+          btnClassName={classes.button}
+        >
+          <EditIcon color="primary" />
+        </MyButton>
         <Dialog
           open={this.state.open}
           onClose={this.handleClose}
