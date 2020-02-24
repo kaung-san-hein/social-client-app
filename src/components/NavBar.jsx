@@ -10,9 +10,9 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Button from "@material-ui/core/Button";
 
 // MUI icon
-import AddIcon from "@material-ui/icons/Add";
 import HomeIcon from "@material-ui/icons/Home";
 import Notifications from "@material-ui/icons/Notifications";
+import PostScream from "./PostScream";
 
 class NavBar extends Component {
   render() {
@@ -22,9 +22,7 @@ class NavBar extends Component {
         <Toolbar className="nav-container">
           {authenticated ? (
             <React.Fragment>
-              <MyButton tip="Post a Scream!">
-                <AddIcon />
-              </MyButton>
+              <PostScream />
               <Link to="/">
                 <MyButton tip="Home">
                   <HomeIcon />
