@@ -19,9 +19,10 @@ import UnfoldMore from "@material-ui/icons/UnfoldMore";
 
 // Redux stuff
 import { connect } from "react-redux";
-import { getScream } from "../../redux/actions/DataAction";
+import { getScream, clearErrors } from "../../redux/actions/DataAction";
 import LikeButton from "./LikeButton";
 import Comments from "./Comments";
+import CommentForm from "./CommentForm";
 
 const styles = theme => ({
   ...theme.spreadThis,
@@ -65,6 +66,7 @@ class ScreamDialog extends Component {
     this.setState({
       open: false
     });
+    this.props.clearErrors();
   };
 
   render() {
@@ -116,6 +118,7 @@ class ScreamDialog extends Component {
           <span>{commentCount} comments</span>
         </Grid>
         <hr className={classes.visibleSeparator} />
+        <CommentForm screamId={screamId} />
         <Comments comments={comments} />
       </Grid>
     );
@@ -154,6 +157,7 @@ class ScreamDialog extends Component {
 ScreamDialog.propTypes = {
   classes: PropTypes.object.isRequired,
   getScream: PropTypes.func.isRequired,
+  clearErrors: PropTypes.func.isRequired,
   screamId: PropTypes.string.isRequired,
   userHandle: PropTypes.string.isRequired,
   UI: PropTypes.object.isRequired,
@@ -167,6 +171,6 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps, { getScream })(
+export default connect(mapStateToProps, { getScream, clearErrors })(
   withStyles(styles)(ScreamDialog)
 );
