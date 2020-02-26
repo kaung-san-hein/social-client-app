@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import MyButton from "../util/MyButton";
+import MyButton from "../../util/MyButton";
 
 // MUI stuff
 import AppBar from "@material-ui/core/AppBar";
@@ -12,7 +12,7 @@ import Button from "@material-ui/core/Button";
 // MUI icon
 import HomeIcon from "@material-ui/icons/Home";
 import Notifications from "@material-ui/icons/Notifications";
-import PostScream from "./PostScream";
+import PostScream from "../scream/PostScream";
 
 class NavBar extends Component {
   render() {

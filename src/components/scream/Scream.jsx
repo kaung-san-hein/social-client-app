@@ -16,7 +16,7 @@ import ChatIcon from "@material-ui/icons/Chat";
 // Redux
 import { connect } from "react-redux";
 
-import MyButton from "../util/MyButton";
+import MyButton from "../../util/MyButton";
 import DeleteScream from "./DeleteScream";
 import ScreamDialog from "./ScreamDialog";
 import LikeButton from "./LikeButton";
