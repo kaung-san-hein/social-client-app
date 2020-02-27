@@ -122,6 +122,26 @@ export const submitComment = (screamId, commentData) => dispatch => {
     });
 };
 
+// a user's data
+export const getUserData = userHandle => dispatch => {
+  dispatch({ type: LOADING_DATA });
+  axios
+    .get(`/user/${userHandle}`)
+    .then(res => {
+      dispatch({
+        type: SET_SCREAMS,
+        payload: res.data.screams
+      });
+    })
+    .catch(err => {
+      console.log(err);
+      dispatch({
+        type: SET_SCREAMS,
+        payload: []
+      });
+    });
+};
+
 export const clearErrors = () => dispatch => {
   dispatch({
     type: CLEAR_ERRORS
