@@ -11,10 +11,14 @@ import StaticProfile from "../components/profile/StaticProfile";
 
 class User extends Component {
   state = {
-    profile: null
+    profile: null,
+    screamIdParam: null
   };
   componentDidMount() {
-    const { handle } = this.props.match.params;
+    const { handle, screamId } = this.props.match.params;
+
+    if (screamId) this.setState({ screamIdParam: screamId });
+
     this.props.getUserData(handle);
     axios
       .get(`/user/${handle}`)
@@ -29,11 +33,19 @@ class User extends Component {
     const { screams, loading } = this.props.data;
     const { handle } = this.props.match.params;
 
+    const { profile, screamIdParam } = this.state;
+
     let recentScreamsMarkup = !loading ? (
       screams.length === 0 ? (
         <p>{handle} have no scream!!!!!</p>
-      ) : (
+      ) : !screamIdParam ? (
         screams.map((scream, index) => <Scream scream={scream} key={index} />)
+      ) : (
+        screams.map((scream, index) => {
+          if (scream.screamId !== screamIdParam)
+            return <Scream scream={scream} key={index} />;
+          else return <Scream scream={scream} key={index} openDialog />;
+        })
       )
     ) : (
       <p>Loading data...</p>
@@ -44,10 +56,10 @@ class User extends Component {
           {recentScreamsMarkup}
         </Grid>
         <Grid item xs={12} sm={4}>
-          {this.state.profile === null ? (
+          {profile === null ? (
             <p>Loading profile...</p>
           ) : (
-            <StaticProfile profile={this.state.profile} />
+            <StaticProfile profile={profile} />
           )}
         </Grid>
       </Grid>

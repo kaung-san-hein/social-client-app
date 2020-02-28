@@ -11,8 +11,9 @@ import Button from "@material-ui/core/Button";
 
 // MUI icon
 import HomeIcon from "@material-ui/icons/Home";
-import Notifications from "@material-ui/icons/Notifications";
+
 import PostScream from "../scream/PostScream";
+import Notifications from "./Notifications";
 
 class NavBar extends Component {
   render() {
@@ -28,9 +29,7 @@ class NavBar extends Component {
                   <HomeIcon />
                 </MyButton>
               </Link>
-              <MyButton tip="Notifications">
-                <Notifications />
-              </MyButton>
+              <Notifications />
             </React.Fragment>
           ) : (
             <React.Fragment>
