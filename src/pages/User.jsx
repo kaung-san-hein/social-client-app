@@ -8,6 +8,8 @@ import Grid from "@material-ui/core/Grid";
 import { connect } from "react-redux";
 import { getUserData } from "../redux/actions/DataAction";
 import StaticProfile from "../components/profile/StaticProfile";
+import ScreamSkeleton from "../util/ScreamSkeleton";
+import ProfileSkeleton from "../util/ProfileSkeleton";
 
 class User extends Component {
   state = {
@@ -48,7 +50,7 @@ class User extends Component {
         })
       )
     ) : (
-      <p>Loading data...</p>
+      <ScreamSkeleton />
     );
     return (
       <Grid container spacing={10}>
@@ -57,7 +59,7 @@ class User extends Component {
         </Grid>
         <Grid item xs={12} sm={4}>
           {profile === null ? (
-            <p>Loading profile...</p>
+            <ProfileSkeleton />
           ) : (
             <StaticProfile profile={profile} />
           )}
